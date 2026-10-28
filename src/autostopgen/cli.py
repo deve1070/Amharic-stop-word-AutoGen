@@ -57,12 +57,11 @@ def _emit(gen: StopwordGenerator, a: argparse.Namespace) -> None:
 
 def _cmd_generate(a: argparse.Namespace) -> int:
     gen = _make_gen(a)
-    if a.input_mode == "blank":
-        gen.partial_fit(iter_documents(a.inputs))
-    elif a.input_mode == "lines":
-        gen.partial_fit(iter_lines(a.inputs))
+    units = iter_documents(a.inputs) if a.units == "blank" else iter_lines(a.inputs)
+    if a.block_tokens:
+        gen.partial_fit_stream(units, block_tokens=a.block_tokens)
     else:
-        gen.partial_fit_stream(iter_lines(a.inputs), block_tokens=a.block_tokens)
+        gen.partial_fit(units)
     print(f"counted {gen.n_tokens_:,} tokens, {gen.n_docs_:,} documents/blocks, "
           f"{gen.vocab_size_:,} types", file=sys.stderr)
     if a.save_state:
@@ -121,10 +120,11 @@ def build_parser() -> argparse.ArgumentParser:
     g = sub.add_parser("generate", help="generate a stopword list from text files (.txt/.gz/.xz/.bz2)")
     g.add_argument("inputs", nargs="+")
     _scoring_args(g)
-    g.add_argument("--input-mode", choices=["stream", "lines", "blank"], default="stream",
-                   help="stream: ignore boundaries, cut into token blocks (default); "
-                        "lines: each line is a document; blank: blank-line separated documents")
-    g.add_argument("--block-tokens", type=int, default=1000)
+    g.add_argument("--units", choices=["lines", "blank"], default="lines",
+                   help="input units: lines (default) or blank-line separated documents (the CC-100 layout)")
+    g.add_argument("--block-tokens", type=int, default=1000,
+                   help="pack units into blocks of this many to twice this many tokens, ending at unit "
+                        "boundaries (default 1000); 0 = each unit is one document")
     g.add_argument("--save-state", help="save raw counts (gzip) to re-score later")
     g.set_defaults(func=_cmd_generate)
 

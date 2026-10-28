@@ -36,10 +36,11 @@ and adding the diagnostics lowered that to 13-37%. They are calibrated for equal
 ## Use
 
 ```python
-from autostopgen import StopwordGenerator, consensus_stopwords, export_review, load_review
+from autostopgen import StopwordGenerator, consensus_stopwords, export_review, iter_documents, load_review
 
 gen = StopwordGenerator.from_preset("am", top_k=300)
-gen.fit_stream(lines, block_tokens=1000)   # or gen.fit(documents) with one string per document
+gen.fit_stream(iter_documents("cc100.txt"), block_tokens=1000)   # blocks end at document boundaries
+# or gen.fit(documents): one string per document, no blocking
 gen.stopwords_; gen.scores_[0]; gen.coverage()
 gen.metrics = ("tf", "idf", "entropy")     # re-score without recounting
 gen.save_state("counts.tsv.gz")            # StopwordGenerator.load_state(...) later
@@ -55,12 +56,20 @@ final = load_review("review.csv")
 Command line (reads `.txt`, `.gz`, `.xz`, `.bz2`):
 
 ```bash
-autostopgen generate am.txt GPAC.txt --lang am --top 300 \
+autostopgen generate am.txt --units blank --lang am --top 300 \
     --save-state counts.tsv.gz --scores scores.csv --review review.csv --out am.txt
 autostopgen rescore counts.tsv.gz --lang am --top 150
 autostopgen apply-review review.csv --out am_final.txt
 autostopgen compare am_final.txt reference.txt --lang am
 ```
+
+## Blocks and documents
+
+`fit_stream` packs consecutive input texts into blocks of `block_tokens` to `2 * block_tokens` tokens. A block ends
+at the first text boundary after it reaches `block_tokens`; only a text that would push it past twice that size is
+cut. Feed it whole documents (`iter_documents`, or `--units blank`) so that blocks rarely split an article, or lines
+when document boundaries are unknown. Natural CC-100 documents are too short to use one per unit (median 67 tokens),
+and IDF on very short units is noisy.
 
 ## Any language
 

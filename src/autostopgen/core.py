@@ -279,22 +279,27 @@ class StopwordGenerator:
         return self.partial_fit(docs)
 
     def partial_fit_stream(self, texts: Iterable[str], block_tokens: int = 1000) -> "StopwordGenerator":
-        """Add text whose document boundaries are unknown or meaningless.
+        """Count text in blocks of ``block_tokens`` to ``2 * block_tokens`` tokens that end at text boundaries.
 
-        Tokens from consecutive strings are concatenated and cut into pseudo-documents
-        of ``block_tokens`` tokens. A final block shorter than half a block is dropped.
-        Use this for line-per-sentence corpora.
+        Consecutive strings are concatenated, and a block is closed at the first string boundary
+        after it reaches ``block_tokens`` tokens. A string that would push the block past
+        ``2 * block_tokens`` is cut into ``block_tokens``-token pieces. Pass whole documents
+        (``iter_documents``) so that blocks rarely split a document, or lines (``iter_lines``)
+        when document boundaries are unknown. A final block shorter than half a block is dropped.
         """
         if block_tokens < 10:
             raise ValueError("block_tokens must be >= 10")
         buf: List[str] = []
         for text in texts:
             buf.extend(self._tokens(text))
-            if len(buf) >= block_tokens:
-                n_full = len(buf) // block_tokens
-                for b in range(n_full):
+            if len(buf) >= 2 * block_tokens:
+                n_cut = len(buf) // block_tokens - 1
+                for b in range(n_cut):
                     self._add_block(buf[b * block_tokens : (b + 1) * block_tokens])
-                buf = buf[n_full * block_tokens :]
+                buf = buf[n_cut * block_tokens :]
+            if len(buf) >= block_tokens:
+                self._add_block(buf)
+                buf = []
         if len(buf) >= block_tokens // 2:
             self._add_block(buf)
         return self
