@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autostopgen"
+version = "0.2.1"
+description = "Language-agnostic automatic stopword generation from a corpus (term frequency, IDF and entropy), with an Amharic preset"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["stopwords", "nlp", "information retrieval", "amharic", "text preprocessing"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+autostopgen = "autostopgen.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+autostopgen = ["data/*.txt", "data/*.json", "py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
