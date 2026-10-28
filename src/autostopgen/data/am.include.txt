@@ -1,6 +1,6 @@
 # Whitelist: never removed by the noun filter (exclude lists, residual-IDF threshold, title rule).
 # It protects words the statistics rank; it does not add words that were not ranked.
-# Grouped by the reason recorded in the hand review of the top 600 candidates (reviews/am_review.csv).
+# Grouped by the reason recorded in the hand review of the top 988 candidates (reviews/am_review.csv).
 
 # copula / auxiliary (be, become, exist)
 ነው
@@ -72,6 +72,26 @@
 አለባቸው
 ኖሮ
 ያሉትን
+የሌለው
+ካለ
+አይሆንም
+ለመሆን
+የሚሆነው
+የሚሆን
+አይደሉም
+አለብን
+ሲሆኑ
+ለመሆኑ
+ካለው
+የሚሆኑ
+ካልሆነ
+አለን
+መሆናቸው
+ሆኑ
+በነበረው
+እንደሆኑ
+እንዳሉ
+አሉት
 
 # postposition / preposition
 ላይ
@@ -104,6 +124,11 @@
 በታች
 በተያያዘ
 ባሻገር
+አስመልክቶ
+በስተቀር
+በቀር
+ኋላ
+አንስቶ
 
 # conjunction / discourse particle
 ግን
@@ -129,6 +154,16 @@
 እናም
 ወዘተ
 ወይስ
+እንዲሁ
+እንዴ
+ቀርቶ
+ስለሆነም
+ወይንም
+እንዲያውም
+እነሆ
+ሳለ
+ይሁንና
+ሳይቀር
 
 # light noun (kept by policy)
 ጊዜ
@@ -148,6 +183,23 @@
 የመጀመሪያው
 ሁለተኛ
 የመጀመሪያ
+መጨረሻ
+በሁለት
+ስድስት
+ከሁለት
+ለአንድ
+ቢሊዮን
+ሁለቱ
+አንድም
+ሁለተኛው
+አንዲት
+በመጀመሪያ
+አስር
+ሁለቱም
+የመጨረሻ
+ለመጀመሪያ
+አንደኛው
+አስራ
 
 # pronoun / demonstrative
 ይህ
@@ -177,6 +229,15 @@
 ለዚህም
 ራሱ
 ከዚህም
+እኛም
+እንደዚህ
+ራሳቸውን
+ያን
+ያንን
+ሁላችንም
+እኔን
+የራሱን
+የእኛ
 
 # quantifier / degree word
 ብቻ
@@ -210,6 +271,15 @@
 ሁሉንም
 የአንድ
 ይበልጥ
+ቢያንስ
+በብዙ
+በሁሉም
+በተለያየ
+እያንዳንዱ
+ሌሎችም
+ከሁሉም
+ብዙም
+ሁሉን
 
 # question / indefinite word
 ምን
@@ -221,6 +291,10 @@
 ማንም
 የት
 ማንኛውም
+ምንድን
+በምን
+መቼ
+ምንድነው
 
 # adverb (time, manner)
 አሁን
@@ -248,6 +322,25 @@
 ዛሬም
 በተመሳሳይ
 ወደፊት
+ነገ
+በእርግጥ
+አብሮ
+ምናልባት
+ቀድሞ
+ትናንት
+ላለፉት
+በዛሬው
+በፍጥነት
+በትክክል
+ቀጥሎ
+ፈጽሞ
+በሚገባ
+በቅርብ
+በደንብ
+አስቀድሞ
+በአግባቡ
+መቼም
+በመጨረሻም
 
 # quotative 'say' (quote marker)
 ብሎ
@@ -273,6 +366,13 @@
 የሚሉ
 እንዳለው
 የሚሉት
+ይባላል
+ለማለት
+የሚባለው
+ተብለው
+የተባለ
+በሚለው
+እየተባለ
 
 # 'kind, type'; used like 'such'
 አይነት
@@ -290,6 +390,14 @@
 ያስፈልጋል
 ይመስላል
 እንደሚችል
+ይመስለኛል
+አይቻልም
+የሚችሉ
+እንችላለን
+የሚችለው
+የለበትም
+እንዳለበት
+የሚገባው
 
 # light verb ማድረግ 'do'
 ማድረግ
@@ -298,24 +406,67 @@
 አድርጎ
 አድርገው
 ያደረገው
+ያደርጋል
+አድርጓል
+ተደርጎ
+ያደረጉት
+አድርገዋል
+ያደረገ
+ተደርጓል
+የተደረገው
 
 # 'in this way' in በዚህ መልኩ
 መልኩ
 
 # plural of light noun ነገር
 ነገሮች
+ነገሮችን
 
 # existential 'is found / is located'
 ይገኛል
 የሚገኙ
 የሚገኘው
 ይገኛሉ
+የሚገኝ
+በሚገኘው
 
 # 'front, before'; also noun 'face'
 ፊት
 
 # 'to a great extent'; adverbial
 በከፍተኛ
+
+# 'outside, abroad'; clitic form of ውጭ
+በውጭ
+
+# 'absolutely, entirely'; degree word
+ፍጹም
+
+# plural marker 'እነ X' (X and others)
+እነ
+
+# 'each other' in እርስ በርስ
+እርስ
+
+# vocative or interjection
+ሆይ
+አይ
+
+# 'is expected, probably'
+አይቀርም
+ይጠበቃል
+
+# 'by means of' in በ... አማካኝነት
+አማካኝነት
+
+# 'many people'; quantifier
+ብዙዎች
+
+# definite form of light noun ነገር
+ነገሩ
+
+# 'and the like' in እና መሰል
+መሰል
 
 # Pronouns and demonstratives below the reviewed candidates
 አንቺ
