@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Language-agnostic automatic stopword generation from a corpus (term frequency, IDF and entropy), with an Amharic preset"
 readme = "README.md"
 requires-python = ">=3.9"
+authors = [{ name = "Dawit Mekonnen Kassa" }]
 license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["stopwords", "nlp", "information retrieval", "amharic", "text preprocessing"]
