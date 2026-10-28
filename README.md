@@ -74,7 +74,8 @@ autostopgen compare am_final.txt reference.txt --lang am
 at the first text boundary after it reaches `block_tokens`; only a text that would push it past twice that size is
 cut. Feed it whole documents (`iter_documents`, or `--units blank`) so that blocks rarely split an article, or lines
 when document boundaries are unknown. Natural CC-100 documents are too short to use one per unit (median 67 tokens),
-and IDF on very short units is noisy.
+and IDF on very short units is noisy. `scripts/block_size_sensitivity.py` compares rankings across block sizes
+(overlap and Kendall's tau, `autostopgen.list_agreement`).
 
 ## Removing nouns and names
 
@@ -109,8 +110,10 @@ fragments. Surface forms are otherwise kept; pass a morphology-aware tokenizer v
 The noun filter uses `data/am.exclude.txt` (known nouns), `data/am.include.txt` (light nouns ጊዜ and ነገር, pronouns,
 demonstratives and particles), `data/am.person_titles.txt` and `data/am.place_words.txt`.
 
-`scripts/build_amharic_list.py` counts each corpus separately, writes the combined-corpus list and a cross-corpus
-consensus list (a word must score well in every corpus), plus a review CSV. `--reuse-state` re-scores saved counts without recounting. The bundled `am.txt` is the consensus list. Until you
+`scripts/build_amharic_list.py` counts each corpus separately (CC-100 in blocks that end at document boundaries),
+writes the combined-corpus list and a cross-corpus consensus list (a word must score well in every corpus) passed
+through the noun filter, plus a review CSV. It prints cc100-vs-GPAC agreement before and after filtering and a table
+of known nouns and function words. `--reuse-state` re-scores saved counts without recounting. The bundled `am.txt` is the consensus list. Until you
 build it, `load_stopwords("am")` raises a clear error.
 
 ## Large corpora
