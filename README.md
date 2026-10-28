@@ -118,7 +118,7 @@ writes the combined-corpus list and a cross-corpus consensus list (a word must s
 through the noun filter, plus a review CSV. It prints cc100-vs-GPAC agreement before and after filtering and a table
 of known nouns and function words. `--reuse-state` re-scores saved counts without recounting, and `--review` makes the list exactly the words marked
 `y` in an edited review CSV. The bundled `am.txt` is the consensus list after the
-noun filter and a hand review (408 words; see `am.meta.json`).
+noun filter and a hand review (567 words; see `am.meta.json`).
 
 ### Evaluation of the bundled list
 

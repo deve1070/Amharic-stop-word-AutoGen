@@ -27,17 +27,17 @@
   ],
   "consensus": "min",
   "top_k": 300,
-  "words": 408,
+  "words": 567,
   "filter": {
     "ridf_max": 0.4,
     "title_min_hits": 20,
     "title_min_ratio": 0.2,
-    "excluded_words": 3846,
-    "protected_words": 419,
+    "excluded_words": 3950,
+    "protected_words": 567,
     "rejected_from_ranking": 354,
     "ranking_depth": 654
   },
-  "token_coverage_combined": 0.2159,
+  "token_coverage_combined": 0.2231,
   "reviewed_by_hand": true,
   "review_file": "am_review.csv"
 }
