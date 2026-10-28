@@ -107,8 +107,10 @@ The `am` preset merges interchangeable letters (ሐ/ኀ→ሀ, ሠ→ሰ, ዐ→
 (ዶ/ር→ዶክተር, ወ/ሮ→ወይዘሮ, ጠ/ሚ→ጠቅላይ ሚኒስትር, ...), handles Ethiopic punctuation (። ፡ ፣ ፤) and drops single-letter
 fragments. Surface forms are otherwise kept; pass a morphology-aware tokenizer via `tokenizer=`.
 
-The noun filter uses `data/am.exclude.txt` (known nouns), `data/am.include.txt` (light nouns ጊዜ and ነገር, pronouns,
-demonstratives and particles), `data/am.person_titles.txt` and `data/am.place_words.txt`.
+The noun filter uses `data/am.exclude.txt` (words reviewed by hand as nouns, names, adjectives or content verbs),
+`data/am.include.txt` (words reviewed as stopwords, including the light nouns ጊዜ and ነገር, plus pronouns that rank
+lower), `data/am.person_titles.txt` and `data/am.place_words.txt`. Both lists are grouped by the reason recorded in
+`reviews/am_review.csv`, the review of the top 600 candidates.
 
 `scripts/build_amharic_list.py` counts each corpus separately (CC-100 in blocks that end at document boundaries),
 writes the combined-corpus list and a cross-corpus consensus list (a word must score well in every corpus) passed
