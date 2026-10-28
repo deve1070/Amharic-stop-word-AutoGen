@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,11 +8,14 @@ version = "0.1.0"
 description = "Language-agnostic automatic stopword generation from a corpus (term frequency, IDF and entropy), with an Amharic preset"
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 keywords = ["stopwords", "nlp", "information retrieval", "amharic", "text preprocessing"]
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: Amharic",
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Topic :: Text Processing :: Linguistic",
 ]
 dependencies = []
