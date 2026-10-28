@@ -19,6 +19,15 @@ def test_stream_blocks_end_at_text_boundaries():
     assert rec.blocks[0][-1] == "t1w49" and rec.blocks[1][-1] == "t3w9"
 
 
+def test_iter_lines_splits_overlong_lines_at_whitespace(tmp_path):
+    words = [f"w{i}" for i in range(5000)]
+    f = tmp_path / "one_line.txt"
+    f.write_text(" ".join(words) + "\nshort line\n", encoding="utf-8")
+    pieces = list(a.iter_lines(f, max_chars=1000))
+    assert max(len(p) for p in pieces) <= 1000
+    assert " ".join(pieces).split() == words + ["short", "line"]
+
+
 def _title_corpus():
     func = "ነው ላይ ወደ ጋር".split()
     docs = []

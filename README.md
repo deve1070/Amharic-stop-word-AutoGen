@@ -94,7 +94,8 @@ build it, `load_stopwords("am")` raises a clear error.
 
 ## Large corpora
 
-Counting is streaming: memory is proportional to vocabulary size, not corpus size. Save counts with
+Counting is streaming: memory is proportional to vocabulary size, not corpus size. `iter_lines` cuts lines longer
+than `max_chars` at whitespace, so a file without line breaks is also streamed. Save counts with
 `save_state` and re-score later; count shards in parallel and combine them with `merge`.
 
 ## Notes and limits
