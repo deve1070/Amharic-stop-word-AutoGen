@@ -127,35 +127,34 @@ token; the morpheme-based IRIT list keeps only entries that occur as standalone 
 
 | list | words compared | in the bundled list | rejected in the review | never reviewed |
 |---|---|---|---|---|
-| spaCy `lang/am` (Teshome Kassie; Tihitina Petros) | 227 | 114 (50%) | 11 | 102 |
-| uhhlt/amharic-stopwords (Hugging Face) | 287 | 125 (44%) | 52 | 110 |
-| IRIT, Yeshambel, Mothe & Assabie (2021) | 135 | 61 (45%) | 9 | 65 |
+| spaCy `lang/am` (Teshome Kassie; Tihitina Petros) | 227 | 190 (84%) | 31 | 6 |
+| uhhlt/amharic-stopwords (Hugging Face) | 287 | 177 (62%) | 100 | 10 |
+| IRIT, Yeshambel, Mothe & Assabie (2021) | 135 | 101 (75%) | 34 | 0 |
 
-The published lists agree with each other on 13-44% of their words. 26 words are in all three, and the bundled list
-has 25 of them (not ሁል, "always"). The words the review rejected are nouns (ሁኔታ, ችግር, ሰው, መንግስት), adjectives, news
-reporting verbs (ብለዋል, ገልጸዋል) and time nouns (ቀን, ወር): policy differences, see *Limitations*. The words never
-reviewed ranked below the 988 reviewed candidates. Among them are real function words: less frequent pronouns
-(እናንተ, እነሱ, እሷ), copula forms (ነበረ, ነች, ይሆናሉ), demonstratives (ይኸው, ይህንኑ, እዚያ), and spellings the normalizer
-does not merge (ግዜ for ጊዜ, ትላንት for ትናንት, እንጅ for እንጂ, ደሞ for ደግሞ, መቸ for መቼ). 225 of the 408 bundled words are in
-none of the three lists; most are inflected forms of the copula, of quotative "say", of the light verb ማድረግ, and
-numerals.
+The published lists agree with each other on 13-44% of their words; the 26 words that are in all three are all in the
+bundled list. Every reference word was reviewed except 16 that occur less than once per million tokens in CC-100 and
+GPAC. The rejected words reflect policy differences (see *Limitations*): news reporting verbs (ብለዋል, አስታውቀዋል,
+እንደገለጹት; 15 of spaCy's 31 rejections), nouns (ሁኔታ, ሰው, መንግስት), adjectives, time nouns (ቀን, ወር), politeness formulas
+(እባክህ, አመሰግናለሁ), and, for IRIT, affixes that occur as separate tokens only when written apart from their word
+(ዎች, የሚ). 235 of the 567 bundled words are in none of the three lists; most are inflected forms of the copula, of
+quotative "say" and of the light verb ማድረግ, and numerals.
 
-**Other text genre.** On Amharic Wikipedia (1.7M tokens, encyclopedic text) the list covers 20.4% of tokens,
-against 21.6% on CC-100 and GPAC. 25 bundled words are at least five times rarer there: references to recent time,
-first-person plural forms and conversational particles (ሰሞኑን, ትናንት, ነገ, እኮ, ይመስለኛል, ሁላችንም). Of Wikipedia's own 400
-best candidates, 42 were never reviewed; most are history and geography words (ወንዝ, ነገስታት, ዘመነ), a few are function
-words (ነበረ, በመባል, እሱም, ጋራ).
+**Other text genre.** On Amharic Wikipedia (1.7M tokens, encyclopedic text) the list covers 21.2% of tokens,
+against 22.3% on CC-100 and GPAC. 38 bundled words are at least five times rarer there: references to recent time,
+first-person plural forms and conversational particles (ሰሞኑን, ትናንት, ነገ, እኮ, ይመስለኛል, ሁላችንም). Every Amharic word
+among Wikipedia's own 400 best candidates was reviewed; the remaining ones are English markup words (of, the, http).
 
 Reproduce with `scripts/extract_wikipedia.py` and `scripts/evaluate_amharic_list.py` (the reference lists and the
 Wikipedia dump are not included in this repository).
 
 ### Limitations of the bundled list
 
-* **Missing forms.** The list holds surface forms, and only the 988 highest-ranked candidates were reviewed. Less
-  frequent inflected and clitic forms of function words, some pronouns and colloquial spellings are missing (see
-  above). A tokenizer that splits clitics will merge many of them; it is not part of this release.
-* **Spelling variants.** The normalizer merges interchangeable letters only. Variant spellings such as ግዜ/ጊዜ or
-  እንጅ/እንጂ are separate words, and only the reviewed ones are on the list.
+* **Missing forms.** The list holds surface forms. The review covered the 988 highest-ranked candidates and the
+  words suggested by three published lists and Wikipedia; less frequent inflected and clitic forms of function words
+  outside these are missing. A tokenizer that splits clitics will merge many of them; it is not part of this release.
+* **Spelling variants.** The normalizer merges interchangeable letters only. The list includes the reviewed variant
+  spellings (ግዜ, እንጅ, ደሞ, ትላንት) and a few common misspellings (ወስጥ, እንደት); other variants are separate words that
+  are not on the list.
 * **Genre.** The statistics come from CC-100 (web crawl) and GPAC. Words frequent only in religious, literary or
   conversational text were not evaluated, and some listed words are rare outside news and web text.
 * **Review policy.** One reviewer judged every word. The review kept numerals, the light nouns ጊዜ and ነገር and quote

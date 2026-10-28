@@ -95,7 +95,7 @@ def main():
         unseen = sorted((w for w in ref if w not in ours_set and w not in review), key=lambda w: -per_million(news, w))
         print(f"\n== {name}: {len(ref)} words (skipped: {dict(skipped)})")
         print(f"in the bundled list: {len(inter)}/{len(ref)} ({len(inter) / len(ref):.0%})")
-        reasons = Counter(review[w]["note"].replace(" – check", "") for w in rejected)
+        reasons = Counter(review[w]["note"].split(" [")[0].replace(" – check", "") for w in rejected)
         print(f"rejected in the review: {len(rejected)} {dict(reasons.most_common())}")
         print("  " + " ".join(rejected))
         print(f"never reviewed: {len(unseen)} (per million tokens in cc100+gpac)")
