@@ -106,7 +106,7 @@ def _scoring_args(p: argparse.ArgumentParser) -> None:
     p.add_argument("--min-df", type=int, default=5)
     p.add_argument("--metrics", default="paper",
                    help="paper = tf,idf,entropy (default, recommended); robust = experimental; or a comma list")
-    p.add_argument("--weights", help="e.g. tf=1,idf=1,burst=2")
+    p.add_argument("--weights", help="e.g. tf=1,idf=1,ridf=2")
     p.add_argument("--aggregation", default="rank_mean", choices=["rank_mean", "rank_min"])
     p.add_argument("--out", help="write the list here (default: stdout)")
     p.add_argument("--scores", help="write all candidate scores as CSV")

@@ -34,11 +34,11 @@ def export_review(
     with open(path, "w", newline="", encoding="utf-8") as fh:
         wr = csv.writer(fh)
         wr.writerow(["stopword", "word", "rank", "count", "df", "tf", "idf", "entropy",
-                     "burst", "deficit", "dispersion", "note"])
+                     "ridf", "deficit", "dispersion", "note"])
         for rank, w in enumerate(ordered, 1):
             r = by_word[w]
             wr.writerow(["y" if w in sel else "n", w, rank, r.count, r.df, f"{r.tf:.8g}", f"{r.idf:.4f}",
-                         f"{r.entropy:.4f}", f"{r.burst:.4f}", f"{r.deficit:.4f}", f"{r.dispersion:.4f}", ""])
+                         f"{r.entropy:.4f}", f"{r.ridf:.4f}", f"{r.deficit:.4f}", f"{r.dispersion:.4f}", ""])
     return len(ordered)
 
 

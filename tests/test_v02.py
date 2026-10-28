@@ -45,16 +45,16 @@ def test_expected_entropy_matches_simulation():
         assert expected_entropy(F, N) == pytest.approx(sum(hs) / len(hs), abs=0.01)
 
 
-def test_randomly_placed_word_has_near_zero_burst_and_deficit_and_unit_dispersion():
+def test_randomly_placed_word_has_near_zero_ridf_and_deficit_and_unit_dispersion():
     docs, truth, decoys = decoy_corpus()
     g = a.StopwordGenerator(min_count=100, min_df=20, top_k=None).fit(docs)
     by = {s.word: s for s in g.scores_}
     fw = [by[w] for w in truth if w in by and by[w].count > 1500]
     assert fw
     for s in fw:
-        assert abs(s.burst) < 0.05 and abs(s.deficit) < 0.01 and abs(s.dispersion - 1) < 0.25
+        assert abs(s.ridf) < 0.05 and abs(s.deficit) < 0.01 and abs(s.dispersion - 1) < 0.25
     for w in decoys:
-        assert by[w].burst > 0.15 and by[w].dispersion > 1.5
+        assert by[w].ridf > 0.15 and by[w].dispersion > 1.5
 
 
 def test_state_v2_roundtrip_and_merge_keep_new_metrics(tmp_path):
@@ -63,8 +63,8 @@ def test_state_v2_roundtrip_and_merge_keep_new_metrics(tmp_path):
     g = a.StopwordGenerator(**kw).fit(docs)
     g.save_state(tmp_path / "s.gz")
     h = a.StopwordGenerator.load_state(tmp_path / "s.gz", **kw)
-    assert [(s.word, s.burst, s.deficit, s.dispersion) for s in h.scores_] == \
-           [(s.word, s.burst, s.deficit, s.dispersion) for s in g.scores_]
+    assert [(s.word, s.ridf, s.deficit, s.dispersion) for s in h.scores_] == \
+           [(s.word, s.ridf, s.deficit, s.dispersion) for s in g.scores_]
     whole = a.StopwordGenerator(**kw).fit(docs)
     merged = a.StopwordGenerator(**kw).fit(docs[:150]).merge(a.StopwordGenerator(**kw).fit(docs[150:]))
     assert merged.stopwords_ == whole.stopwords_

@@ -23,7 +23,7 @@ Each candidate word gets a percentile rank on each metric; the ranks are average
 | `tf` | high | ranking |
 | `idf` | low | ranking |
 | `entropy` | high (spread evenly over documents) | ranking (the 2018 paper's three) |
-| `burst` | observed IDF minus the IDF expected at random (Church & Gale) | diagnostic |
+| `ridf` | residual IDF: observed IDF minus the IDF expected at random (Church & Gale) | diagnostic |
 | `deficit` | entropy shortfall versus random placement (Gerlach et al.) | diagnostic |
 | `dispersion` | variance/mean of per-document counts | diagnostic |
 

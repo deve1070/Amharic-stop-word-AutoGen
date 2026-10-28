@@ -17,11 +17,11 @@ from .presets import Tokenizer, get_preset
 from .tokenizers import default_tokenizer
 
 METRICS_PAPER = ("tf", "idf", "entropy")
-METRICS_ROBUST = ("tf", "idf", "burst", "deficit", "dispersion")  # experimental; do not use for ranking
-METRICS = ("tf", "idf", "entropy", "burst", "deficit", "dispersion")
+METRICS_ROBUST = ("tf", "idf", "ridf", "deficit", "dispersion")  # experimental; do not use for ranking
+METRICS = ("tf", "idf", "entropy", "ridf", "deficit", "dispersion")
 # True: a higher raw value makes a word look more like a stopword.
-_HIGH_IS_STOP = {"tf": True, "idf": False, "entropy": True, "burst": False, "deficit": False, "dispersion": False}
-_BANDED = ("burst", "deficit", "dispersion")  # ranked within frequency bands
+_HIGH_IS_STOP = {"tf": True, "idf": False, "entropy": True, "ridf": False, "deficit": False, "dispersion": False}
+_BANDED = ("ridf", "deficit", "dispersion")  # ranked within frequency bands
 _STATE_FORMAT = "autostopgen-state-2"
 
 Aggregation = Union[str, Callable[[Dict[str, List[float]]], List[float]]]
@@ -35,7 +35,7 @@ class WordScore:
     tf: float          # count / total tokens
     idf: float         # log(N / df)
     entropy: float     # normalized to [0, 1]; 1 = spread perfectly evenly over all documents
-    burst: float       # observed IDF minus the IDF expected if the word were placed at random (Church & Gale)
+    ridf: float        # residual IDF: observed IDF minus the IDF expected if the word were placed at random (Church & Gale)
     deficit: float     # (expected - observed entropy under random placement) / log N (Gerlach et al.)
     dispersion: float  # variance/mean of per-document counts; about 1 for a randomly placed word
     score: float       # aggregated stopword-likeness in [0, 1]
@@ -118,8 +118,8 @@ class StopwordGenerator:
     ``tf`` high; ``idf`` low; ``entropy`` high: the three metrics of Miretie & Khedkar (2018).
     These are the default and the only ones recommended for ranking.
 
-    ``burst`` (observed IDF minus the IDF expected if the word were placed at random; Church &
-    Gale 1995), ``deficit`` (entropy shortfall versus random placement; Gerlach et al. 2019) and
+    ``ridf`` (residual IDF: observed IDF minus the IDF expected if the word were placed at random;
+    Church & Gale 1995), ``deficit`` (entropy shortfall versus random placement; Gerlach et al. 2019) and
     ``dispersion`` (variance/mean of per-document counts) are **diagnostics**. They show whether a
     frequent word is clustered by topic, and are exported to ``scores.csv`` and the review CSV.
     Do not use them to *rank* candidates: rare words are too sparse to show any clustering, so
@@ -148,7 +148,7 @@ class StopwordGenerator:
     length_normalize
         Entropy and dispersion use per-document relative frequencies. Fixed once counting starts.
     band_size
-        ``burst``, ``deficit`` and ``dispersion`` are ranked within bands of this many candidates
+        ``ridf``, ``deficit`` and ``dispersion`` are ranked within bands of this many candidates
         of similar frequency (default: max(100, candidates / 200)); ``tf``, ``idf`` and
         ``entropy`` are ranked over all candidates.
     """
@@ -366,7 +366,7 @@ class StopwordGenerator:
             raw["idf"].append(idf)
             # Rounded so that summation order (e.g. merged vs single-pass counts) cannot reorder ties.
             raw["entropy"].append(round(min(1.0, max(0.0, h_obs / log_n)), 12))
-            raw["burst"].append(round(idf - math.log(N / df_exp), 10))
+            raw["ridf"].append(round(idf - math.log(N / df_exp), 10))
             raw["deficit"].append(round((h_null - h_obs) / log_n, 10))
             raw["dispersion"].append(round(len_factor * var_r / mean_r, 10))
         self._raw_cache = (key, cand, raw)
@@ -403,7 +403,7 @@ class StopwordGenerator:
                 scores = [sum(w[m] * ranks[m][k] for m in self.metrics) / wsum for k in range(n)]
         rows = [
             WordScore(self._words[i], self._count[i], self._df[i], raw["tf"][k], raw["idf"][k],
-                      raw["entropy"][k], raw["burst"][k], raw["deficit"][k], raw["dispersion"][k], scores[k])
+                      raw["entropy"][k], raw["ridf"][k], raw["deficit"][k], raw["dispersion"][k], scores[k])
             for k, i in enumerate(cand)
         ]
         rows.sort(key=lambda r: (-r.score, -r.tf, r.word))
@@ -454,10 +454,10 @@ class StopwordGenerator:
         with open(path, "w", newline="", encoding="utf-8") as fh:
             wr = csv.writer(fh)
             wr.writerow(["rank", "word", "selected", "score", "count", "df", "tf", "idf",
-                         "entropy", "burst", "deficit", "dispersion"])
+                         "entropy", "ridf", "deficit", "dispersion"])
             for rank, r in enumerate(rows, 1):
                 wr.writerow([rank, r.word, int(r.word in selected), f"{r.score:.6f}", r.count, r.df,
-                             f"{r.tf:.8g}", f"{r.idf:.6f}", f"{r.entropy:.6f}", f"{r.burst:.6f}",
+                             f"{r.tf:.8g}", f"{r.idf:.6f}", f"{r.entropy:.6f}", f"{r.ridf:.6f}",
                              f"{r.deficit:.6f}", f"{r.dispersion:.6f}"])
 
     def save_stopwords(self, path: PathLike) -> None:

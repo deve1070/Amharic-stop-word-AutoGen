@@ -7,7 +7,7 @@
 Each corpus is counted separately (tf + idf + entropy, as in the 2018 paper), then:
   * combined.txt   scored on the two corpora merged
   * consensus.txt  scored per corpus, then the minimum across corpora          (becomes am.txt)
-  * review.csv     candidates with a y/n "stopword" column to edit by hand; burst/deficit/dispersion
+  * review.csv     candidates with a y/n "stopword" column to edit by hand; ridf/deficit/dispersion
                    columns are diagnostics that show which frequent words are clustered by topic
 Writes src/autostopgen/data/am.txt (+ am.meta.json). Review the list before releasing it.
 """
