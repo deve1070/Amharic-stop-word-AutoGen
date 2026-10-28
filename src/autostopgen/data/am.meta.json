@@ -1,7 +1,7 @@
 {
   "language": "am",
   "autostopgen_version": "0.1.0",
-  "built": "2026-10-28",
+  "built": "2026-10-29",
   "corpora": {
     "cc100": {
       "file": "am.txt",
@@ -27,15 +27,17 @@
   ],
   "consensus": "min",
   "top_k": 300,
+  "words": 277,
   "filter": {
     "ridf_max": 0.4,
     "title_min_hits": 20,
     "title_min_ratio": 0.2,
-    "excluded_words": 3301,
-    "protected_words": 21,
-    "rejected_from_ranking": 57,
-    "ranking_depth": 357
+    "excluded_words": 3597,
+    "protected_words": 288,
+    "rejected_from_ranking": 315,
+    "ranking_depth": 615
   },
-  "token_coverage_combined": 0.2337,
-  "reviewed_by_hand": false
+  "token_coverage_combined": 0.1983,
+  "reviewed_by_hand": true,
+  "review_file": "am_review.csv"
 }

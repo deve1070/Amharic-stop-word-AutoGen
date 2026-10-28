@@ -116,8 +116,8 @@ lower), `data/am.person_titles.txt` and `data/am.place_words.txt`. Both lists ar
 writes the combined-corpus list and a cross-corpus consensus list (a word must score well in every corpus) passed
 through the noun filter, plus a review CSV. It prints cc100-vs-GPAC agreement before and after filtering and a table
 of known nouns and function words. `--reuse-state` re-scores saved counts without recounting, and `--review` makes the list exactly the words marked
-`y` in an edited review CSV. The bundled `am.txt` is the consensus list. Until you
-build it, `load_stopwords("am")` raises a clear error.
+`y` in an edited review CSV. The bundled `am.txt` is the consensus list after the
+noun filter and a hand review (277 words; see `am.meta.json`).
 
 ## Large corpora
 
