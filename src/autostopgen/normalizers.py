@@ -1,6 +1,7 @@
 """Text normalizers applied before tokenization."""
 from __future__ import annotations
 
+import re
 import unicodedata
 from typing import Callable, Dict
 
@@ -44,4 +45,26 @@ AMHARIC_CHAR_MAP["\u12c9"] = "\u12cd"  # ዉ -> ው
 AMHARIC_CHAR_MAP["\u12a3"] = "\u12a0"  # ኣ -> አ
 AMHARIC_CHAR_MAP["\u12d3"] = "\u12a0"  # ዓ -> አ (set after the series loop so it overrides ዓ -> ኣ)
 
-amharic_normalizer: Normalizer = make_translation_normalizer(AMHARIC_CHAR_MAP)
+# Slash abbreviations, written after letter merging (so ፅ/ቤት is matched as ጽ/ቤት). The tokenizer
+# splits on "/" and drops single letters, so without expansion ዶ/ር (doctor) vanishes and the word
+# after it cannot be recognized as a name. A clitic prefix (የ, በ, ለ, ...) may be attached.
+AMHARIC_ABBREVIATIONS: Dict[str, str] = {
+    "ዶ/ር": "ዶክተር", "ፕ/ር": "ፕሮፌሰር", "ወ/ሮ": "ወይዘሮ", "ወ/ሪት": "ወይዘሪት", "ጠ/ሚ": "ጠቅላይ ሚኒስትር",
+    "ጠ/ሚኒስትር": "ጠቅላይ ሚኒስትር", "አ/አ": "አዲስ አበባ", "ት/ቤት": "ትምህርት ቤት", "ም/ቤት": "ምክር ቤት",
+    "ጽ/ቤት": "ጽህፈት ቤት", "መ/ቤት": "መስሪያ ቤት", "ቤ/ክ": "ቤተ ክርስቲያን",
+}
+_ETHIOPIC = "\u1200-\u137f"
+_AMHARIC_ABBR_RX = re.compile(
+    f"(?<![{_ETHIOPIC}])((?:የ|በ|ለ|ከ|ስለ|እንደ|ወደ)?)("
+    + "|".join(re.escape(k) for k in sorted(AMHARIC_ABBREVIATIONS, key=len, reverse=True))
+    + f")(?![{_ETHIOPIC}])"
+)
+_amharic_letters = make_translation_normalizer(AMHARIC_CHAR_MAP)
+
+
+def amharic_normalizer(text: str) -> str:
+    """Merge interchangeable letters, then expand slash abbreviations (ዶ/ር -> ዶክተር)."""
+    text = _amharic_letters(text)
+    if "/" not in text:
+        return text
+    return _AMHARIC_ABBR_RX.sub(lambda m: m.group(1) + AMHARIC_ABBREVIATIONS[m.group(2)], text)

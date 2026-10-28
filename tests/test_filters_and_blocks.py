@@ -28,6 +28,15 @@ def test_iter_lines_splits_overlong_lines_at_whitespace(tmp_path):
     assert " ".join(pieces).split() == words + ["short", "line"]
 
 
+def test_amharic_normalizer_expands_slash_abbreviations():
+    n, tok = a.amharic_normalizer, a.get_preset("am").tokenizer
+    assert tok(n("ዶ/ር አብይ")) == ["ዶክተር", "አብይ"]
+    assert tok(n("የወ/ሮ አልማዝ")) == ["የወይዘሮ", "አልማዝ"]
+    assert tok(n("በጠ/ሚ መለስ")) == ["በጠቅላይ", "ሚኒስትር", "መለስ"]
+    assert n("ፅ/ቤት") == "ጽህፈት ቤት"
+    assert n("ሀ/ለ") == "ሀ/ለ"
+
+
 def _title_corpus():
     func = "ነው ላይ ወደ ጋር".split()
     docs = []

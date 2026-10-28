@@ -84,9 +84,9 @@ The statistics are language-independent; only text handling differs.
 
 ## Amharic
 
-The `am` preset merges interchangeable letters (ሐ/ኀ→ሀ, ሠ→ሰ, ዐ→አ, ፀ→ጸ, ዉ→ው, ኣ/ዓ→አ), handles Ethiopic
-punctuation (። ፡ ፣ ፤) and drops single-letter fragments (as in ዶ/ር). Surface forms are otherwise kept; pass a
-morphology-aware tokenizer via `tokenizer=`.
+The `am` preset merges interchangeable letters (ሐ/ኀ→ሀ, ሠ→ሰ, ዐ→አ, ፀ→ጸ, ዉ→ው, ኣ/ዓ→አ), expands slash abbreviations
+(ዶ/ር→ዶክተር, ወ/ሮ→ወይዘሮ, ጠ/ሚ→ጠቅላይ ሚኒስትር, ...), handles Ethiopic punctuation (። ፡ ፣ ፤) and drops single-letter
+fragments. Surface forms are otherwise kept; pass a morphology-aware tokenizer via `tokenizer=`.
 
 `scripts/build_amharic_list.py` counts each corpus separately, writes the combined-corpus list and a cross-corpus
 consensus list (a word must score well in every corpus), plus a review CSV. `--reuse-state` re-scores saved counts without recounting. The bundled `am.txt` is the consensus list. Until you
