@@ -17,6 +17,11 @@ classifiers = [
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/deve1070/Amharic-stop-word-AutoGen"
+Repository = "https://github.com/deve1070/Amharic-stop-word-AutoGen"
+Issues = "https://github.com/deve1070/Amharic-stop-word-AutoGen/issues"
+
 [project.optional-dependencies]
 dev = ["pytest"]
 
