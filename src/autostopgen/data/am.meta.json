@@ -1,0 +1,41 @@
+{
+  "language": "am",
+  "autostopgen_version": "0.2.1",
+  "built": "2026-10-28",
+  "corpora": {
+    "cc100": {
+      "file": "am.txt",
+      "units": "blank",
+      "tokens": 65873727,
+      "blocks": 53378
+    },
+    "gpac": {
+      "file": "GPAC.txt",
+      "units": "lines",
+      "tokens": 75419354,
+      "blocks": 75222
+    }
+  },
+  "block_tokens": 1000,
+  "blocks_end_at_unit_boundaries": true,
+  "min_count": 50,
+  "min_df": 20,
+  "metrics": [
+    "tf",
+    "idf",
+    "entropy"
+  ],
+  "consensus": "min",
+  "top_k": 300,
+  "filter": {
+    "ridf_max": 0.4,
+    "title_min_hits": 20,
+    "title_min_ratio": 0.2,
+    "excluded_words": 3301,
+    "protected_words": 21,
+    "rejected_from_ranking": 57,
+    "ranking_depth": 357
+  },
+  "token_coverage_combined": 0.2337,
+  "reviewed_by_hand": false
+}
