@@ -119,6 +119,53 @@ of known nouns and function words. `--reuse-state` re-scores saved counts withou
 `y` in an edited review CSV. The bundled `am.txt` is the consensus list after the
 noun filter and a hand review (408 words; see `am.meta.json`).
 
+### Evaluation of the bundled list
+
+**Published lists.** Each list was normalized with the Amharic preset and reduced to entries that are one Amharic
+token; the morpheme-based IRIT list keeps only entries that occur as standalone words.
+
+| list | words compared | in the bundled list | rejected in the review | never reviewed |
+|---|---|---|---|---|
+| spaCy `lang/am` (Teshome Kassie; Tihitina Petros) | 227 | 114 (50%) | 11 | 102 |
+| uhhlt/amharic-stopwords (Hugging Face) | 287 | 125 (44%) | 52 | 110 |
+| IRIT, Yeshambel, Mothe & Assabie (2021) | 135 | 61 (45%) | 9 | 65 |
+
+The published lists agree with each other on 13-44% of their words. 26 words are in all three, and the bundled list
+has 25 of them (not ሁል, "always"). The words the review rejected are nouns (ሁኔታ, ችግር, ሰው, መንግስት), adjectives, news
+reporting verbs (ብለዋል, ገልጸዋል) and time nouns (ቀን, ወር): policy differences, see *Limitations*. The words never
+reviewed ranked below the 988 reviewed candidates. Among them are real function words: less frequent pronouns
+(እናንተ, እነሱ, እሷ), copula forms (ነበረ, ነች, ይሆናሉ), demonstratives (ይኸው, ይህንኑ, እዚያ), and spellings the normalizer
+does not merge (ግዜ for ጊዜ, ትላንት for ትናንት, እንጅ for እንጂ, ደሞ for ደግሞ, መቸ for መቼ). 225 of the 408 bundled words are in
+none of the three lists; most are inflected forms of the copula, of quotative "say", of the light verb ማድረግ, and
+numerals.
+
+**Other text genre.** On Amharic Wikipedia (1.7M tokens, encyclopedic text) the list covers 20.4% of tokens,
+against 21.6% on CC-100 and GPAC. 25 bundled words are at least five times rarer there: references to recent time,
+first-person plural forms and conversational particles (ሰሞኑን, ትናንት, ነገ, እኮ, ይመስለኛል, ሁላችንም). Of Wikipedia's own 400
+best candidates, 42 were never reviewed; most are history and geography words (ወንዝ, ነገስታት, ዘመነ), a few are function
+words (ነበረ, በመባል, እሱም, ጋራ).
+
+Reproduce with `scripts/extract_wikipedia.py` and `scripts/evaluate_amharic_list.py` (the reference lists and the
+Wikipedia dump are not included in this repository).
+
+### Limitations of the bundled list
+
+* **Missing forms.** The list holds surface forms, and only the 988 highest-ranked candidates were reviewed. Less
+  frequent inflected and clitic forms of function words, some pronouns and colloquial spellings are missing (see
+  above). A tokenizer that splits clitics will merge many of them; it is not part of this release.
+* **Spelling variants.** The normalizer merges interchangeable letters only. Variant spellings such as ግዜ/ጊዜ or
+  እንጅ/እንጂ are separate words, and only the reviewed ones are on the list.
+* **Genre.** The statistics come from CC-100 (web crawl) and GPAC. Words frequent only in religious, literary or
+  conversational text were not evaluated, and some listed words are rare outside news and web text.
+* **Review policy.** One reviewer judged every word. The review kept numerals, the light nouns ጊዜ and ነገር and quote
+  markers (ብሎ, ማለት), and dropped time nouns other than ጊዜ and news reporting verbs. Other tasks may need other
+  choices: edit `reviews/am_review.csv` and rebuild with `--review`.
+* **Normalization is required.** The list is in normalized form. Match it through
+  `remove_stopwords(..., language="am")`, or apply `amharic_normalizer` to the text first; raw text with ሐ, ሠ, ዐ or ፀ
+  spellings will not match.
+* **Thresholds.** The residual IDF threshold (0.40) and the title rule (20 hits, 20% of a word's occurrences) were set
+  on CC-100 and GPAC. Lists generated from other corpora with this package are statistical and need their own review.
+
 ## Large corpora
 
 Counting is streaming: memory is proportional to vocabulary size, not corpus size. `iter_lines` cuts lines longer
