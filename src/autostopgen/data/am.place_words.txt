@@ -1,0 +1,7 @@
+# Administrative place words: the token before one is usually a place name (አዲስ አበባ ከተማ).
+ከተማ
+ክልል
+ዞን
+ወረዳ
+ቀበሌ
+ክፍለ

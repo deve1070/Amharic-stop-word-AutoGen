@@ -1,0 +1,26 @@
+# Whitelist: never removed by the noun filter (exclude lists, residual-IDF threshold, title rule).
+# It protects words the statistics rank; it does not add words that were not ranked.
+# Light nouns kept by decision (many published Amharic stop lists include them)
+ጊዜ
+ነገር
+# Personal pronouns: bursty because they cluster in dialogue and first-person text
+እኔ
+አንተ
+አንቺ
+እሱ
+እርሱ
+እሷ
+እርሷ
+እሳቸው
+እርስዎ
+እኛ
+እናንተ
+እነሱ
+እነርሱ
+# Demonstratives and discourse particles
+ይህ
+ይሄ
+ያ
+እነዚህ
+እነዚያ
+እኮ

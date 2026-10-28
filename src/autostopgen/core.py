@@ -126,7 +126,9 @@ class StopwordGenerator:
     they all look "random" and outrank real stopwords (on a 140-million-word Amharic corpus the
     ranking was filled with rare inflected forms; on a synthetic corpus the paper metrics found 100%
     of the true stopwords and adding these dropped it to 13-37%). They assume equal-size blocks
-    (``fit_stream``) and at least ~100 blocks.
+    (``fit_stream``) and at least ~100 blocks. ``ridf`` is instead used as a threshold on the
+    ranked candidates (``autostopgen.filters.StopwordFilter``): above a tuned value the word is
+    clustered by topic.
 
     Parameters
     ----------
@@ -152,7 +154,8 @@ class StopwordGenerator:
         of similar frequency (default: max(100, candidates / 200)); ``tf``, ``idf`` and
         ``entropy`` are ranked over all candidates.
     observers
-        Callables that receive each block's token list as it is counted.
+        Callables that receive each block's token list as it is counted (e.g.
+        ``autostopgen.filters.TitleContext``, which collects the words that follow titles).
     """
 
     def __init__(

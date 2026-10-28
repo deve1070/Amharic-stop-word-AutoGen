@@ -23,7 +23,7 @@ Each candidate word gets a percentile rank on each metric; the ranks are average
 | `tf` | high | ranking |
 | `idf` | low | ranking |
 | `entropy` | high (spread evenly over documents) | ranking (the 2018 paper's three) |
-| `ridf` | residual IDF: observed IDF minus the IDF expected at random (Church & Gale) | diagnostic |
+| `ridf` | residual IDF: observed IDF minus the IDF expected at random (Church & Gale) | filter threshold, diagnostic |
 | `deficit` | entropy shortfall versus random placement (Gerlach et al.) | diagnostic |
 | `dispersion` | variance/mean of per-document counts | diagnostic |
 
@@ -31,7 +31,12 @@ The last three show whether a frequent word is clustered by topic and are writte
 CSV to help a human reviewer. **Do not rank by them.** Rare words are too sparse to show clustering, so they look
 random and outrank real stopwords: this was found on a 140-million-word Amharic corpus (the list filled with rare
 inflected forms) and reproduced on a synthetic corpus, where the three paper metrics found 100% of the true stopwords
-and adding the diagnostics lowered that to 13-37%. They are calibrated for equal-size blocks (`fit_stream`).
+and adding the diagnostics lowered that to 13-37%. Ranking by `ridf` within frequency bands removed known nouns but
+also the function words ስለ, እንደ, ወይም and ይህ. `ridf` works instead as a threshold on the ranked candidates (see
+*Removing nouns and names*). `deficit` assumes equal-size blocks.
+
+Gries's DP was evaluated and left out: on equal-size blocks it ranks the 5,000 most frequent Amharic words exactly
+like document frequency (Spearman -1.000).
 
 ## Use
 
@@ -71,6 +76,19 @@ cut. Feed it whole documents (`iter_documents`, or `--units blank`) so that bloc
 when document boundaries are unknown. Natural CC-100 documents are too short to use one per unit (median 67 tokens),
 and IDF on very short units is noisy.
 
+## Removing nouns and names
+
+Statistics cannot tell an evenly spread noun (ሰው "person", ጉዳይ "matter") from a function word. `StopwordFilter`
+walks a ranked list and skips words that are
+
+* in an exclude list (`load_lexicon` of word-list files; each entry records its file),
+* above `ridf_max` residual IDF in any corpus (clustered by topic),
+* names found by `TitleContext`: words that often follow a person title (አቶ X Y) or precede a place word
+  (X ከተማ). Pass it as an observer while counting: `StopwordGenerator(observers=[ctx])`.
+
+An include list (whitelist) overrides every exclusion. `select` returns the kept words and each rejected word with its
+reason; pass the reasons to `export_review(..., excluded=...)` to fill the `excluded_by` column.
+
 ## Any language
 
 The statistics are language-independent; only text handling differs.
@@ -87,6 +105,9 @@ The statistics are language-independent; only text handling differs.
 The `am` preset merges interchangeable letters (ሐ/ኀ→ሀ, ሠ→ሰ, ዐ→አ, ፀ→ጸ, ዉ→ው, ኣ/ዓ→አ), expands slash abbreviations
 (ዶ/ር→ዶክተር, ወ/ሮ→ወይዘሮ, ጠ/ሚ→ጠቅላይ ሚኒስትር, ...), handles Ethiopic punctuation (። ፡ ፣ ፤) and drops single-letter
 fragments. Surface forms are otherwise kept; pass a morphology-aware tokenizer via `tokenizer=`.
+
+The noun filter uses `data/am.exclude.txt` (known nouns), `data/am.include.txt` (light nouns ጊዜ and ነገር, pronouns,
+demonstratives and particles), `data/am.person_titles.txt` and `data/am.place_words.txt`.
 
 `scripts/build_amharic_list.py` counts each corpus separately, writes the combined-corpus list and a cross-corpus
 consensus list (a word must score well in every corpus), plus a review CSV. `--reuse-state` re-scores saved counts without recounting. The bundled `am.txt` is the consensus list. Until you

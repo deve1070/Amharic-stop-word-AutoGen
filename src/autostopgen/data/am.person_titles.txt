@@ -1,0 +1,19 @@
+# Person titles: the next one or two tokens are a given name and a father's name.
+# Abbreviations (ዶ/ር, ወ/ሮ, ፕ/ር, ጠ/ሚ) are expanded by the Amharic normalizer before tokenizing.
+አቶ
+ወይዘሮ
+ወይዘሪት
+ዶክተር
+ፕሮፌሰር
+ኢንጂነር
+ሚኒስትር
+ፕሬዚዳንት
+ፕሬዝዳንት
+ጄኔራል
+ኮሎኔል
+ሻለቃ
+ሻምበል
+አባ
+ቀሲስ
+ዲያቆን
+ሼህ

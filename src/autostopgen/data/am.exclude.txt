@@ -1,0 +1,17 @@
+# Known nouns and names that leak into the statistical list (from the 2026-10 handoff).
+# Evenly spread common nouns cannot be removed by distribution statistics; list them here.
+ኢትዮጵያ
+የኢትዮጵያ
+አበባ
+አቶ
+መንግስት
+ህዝብ
+ቤት
+ሰው
+ሰዎች
+አመት
+ስራ
+ጉዳይ
+ሁኔታ
+መንገድ
+ምክንያት

@@ -14,7 +14,17 @@ def _data_dir():
 
 
 def available_languages() -> List[str]:
-    return sorted(p.name[:-4] for p in _data_dir().iterdir() if p.name.endswith(".txt") and p.name != "README.txt")
+    """Codes with a bundled ``<code>.txt`` list (``<code>.include.txt`` and other filter files are not lists)."""
+    return sorted(p.name[:-4] for p in _data_dir().iterdir()
+                  if p.name.endswith(".txt") and p.name != "README.txt" and "." not in p.name[:-4])
+
+
+def data_file(name: str):
+    """Path of a bundled data file, e.g. ``data_file("am.include.txt")``."""
+    f = _data_dir().joinpath(name)
+    if not f.is_file():
+        raise LookupError(f"no bundled data file {name!r}")
+    return f
 
 
 def read_stopword_file(path) -> List[str]:
