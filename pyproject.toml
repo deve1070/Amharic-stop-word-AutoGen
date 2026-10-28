@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autostopgen"
-version = "0.2.1"
+version = "0.1.0"
 description = "Language-agnostic automatic stopword generation from a corpus (term frequency, IDF and entropy), with an Amharic preset"
 readme = "README.md"
 requires-python = ">=3.9"

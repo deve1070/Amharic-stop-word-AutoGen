@@ -10,7 +10,7 @@ from .presets import Preset, get_preset, register_preset
 from .review import export_review, load_review
 from .tokenizers import CharNgramTokenizer, WordTokenizer
 
-__version__ = "0.2.1"
+__version__ = "0.1.0"
 
 __all__ = [
     "ConsensusScore", "consensus_scores", "consensus_stopwords",
