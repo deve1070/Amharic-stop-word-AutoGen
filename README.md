@@ -115,7 +115,8 @@ lower), `data/am.person_titles.txt` and `data/am.place_words.txt`. Both lists ar
 `scripts/build_amharic_list.py` counts each corpus separately (CC-100 in blocks that end at document boundaries),
 writes the combined-corpus list and a cross-corpus consensus list (a word must score well in every corpus) passed
 through the noun filter, plus a review CSV. It prints cc100-vs-GPAC agreement before and after filtering and a table
-of known nouns and function words. `--reuse-state` re-scores saved counts without recounting. The bundled `am.txt` is the consensus list. Until you
+of known nouns and function words. `--reuse-state` re-scores saved counts without recounting, and `--review` makes the list exactly the words marked
+`y` in an edited review CSV. The bundled `am.txt` is the consensus list. Until you
 build it, `load_stopwords("am")` raises a clear error.
 
 ## Large corpora

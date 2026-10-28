@@ -177,3 +177,29 @@ def test_build_script_runs_and_reuses_state(tmp_path):
     r2 = subprocess.run(cmd + ["--reuse-state"], capture_output=True, text=True); assert r2.returncode == 0, r2.stderr
     assert (out / "am.txt").read_text(encoding="utf-8") == first
     assert len(a.read_stopword_file(out / "am.txt")) >= 6
+
+
+def test_build_script_uses_a_reviewed_list(tmp_path):
+    import csv, json, subprocess, sys, pathlib
+    script = pathlib.Path(__file__).resolve().parents[1] / "scripts" / "build_amharic_list.py"
+    rng = random.Random(2)
+    func = "ነው ግን እና ወደ ላይ ነበር ጋር ውስጥ".split()
+    for name in ("a", "b"):
+        lines = [" ".join(rng.choice(func) if rng.random() < .5 else rng.choice(["ኳስ", "ጨዋታ", "ተማሪ"])
+                          for _ in range(40)) for _ in range(600)]
+        (tmp_path / f"{name}.txt").write_text("\n".join(lines), encoding="utf-8")
+    out = tmp_path / "data"; out.mkdir()
+    cmd = [sys.executable, str(script), "--cc100", str(tmp_path / "a.txt"), "--gpac", str(tmp_path / "b.txt"),
+           "--top", "8", "--min-count", "20", "--min-df", "10", "--block-tokens", "100",
+           "--out-dir", str(out), "--work-dir", str(tmp_path / "w")]
+    r = subprocess.run(cmd, capture_output=True, text=True); assert r.returncode == 0, r.stderr
+    rows = list(csv.DictReader(open(tmp_path / "w" / "review.csv", encoding="utf-8")))
+    for row in rows:
+        row["stopword"] = "y" if row["word"] in ("ነው", "ግን", "ጨዋታ") else "n"
+    with open(tmp_path / "reviewed.csv", "w", newline="", encoding="utf-8") as fh:
+        wr = csv.DictWriter(fh, fieldnames=list(rows[0])); wr.writeheader(); wr.writerows(rows)
+    r = subprocess.run(cmd + ["--reuse-state", "--review", str(tmp_path / "reviewed.csv")], capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr
+    assert sorted(a.read_stopword_file(out / "am.txt")) == sorted(["ነው", "ግን", "ጨዋታ"])
+    meta = json.loads((out / "am.meta.json").read_text(encoding="utf-8"))
+    assert meta["reviewed_by_hand"] is True and meta["words"] == 3 and meta["review_file"] == "reviewed.csv"
