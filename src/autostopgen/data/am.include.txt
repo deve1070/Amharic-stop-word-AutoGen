@@ -1,6 +1,6 @@
 # Whitelist: never removed by the noun filter (exclude lists, residual-IDF threshold, title rule).
 # It protects words the statistics rank; it does not add words that were not ranked.
-# Grouped by the reason recorded in the hand review of the top 988 candidates (reviews/am_review.csv).
+# Grouped by the reason recorded in the hand review of 1253 candidates (reviews/am_review.csv).
 
 # copula / auxiliary (be, become, exist)
 ነው
@@ -92,6 +92,28 @@
 እንደሆኑ
 እንዳሉ
 አሉት
+ነህ
+ነች
+ነበረ
+አይደል
+እንዲሆኑ
+ባሉ
+ይሆናሉ
+ያልሆነ
+የሚሆኑት
+በሆኑ
+ነበረች
+ነዋ
+የለ
+እንደሆነና
+ሲኖር
+ከሆነው
+ነሽ
+ለሆኑ
+ለሆነው
+ለሆነ
+የሌላቸውን
+ሲሆንና
 
 # postposition / preposition
 ላይ
@@ -129,6 +151,15 @@
 በቀር
 ኋላ
 አንስቶ
+ሳቢያ
+ጋራ
+አጠገብ
+ከታች
+ታች
+ከፊት
+በውስጥ
+ከውስጥ
+ከኋላ
 
 # conjunction / discourse particle
 ግን
@@ -164,10 +195,23 @@
 ሳለ
 ይሁንና
 ሳይቀር
+አዎ
+እስቲ
+በቃ
+እስኪ
+ኧረ
+አዎን
+አረ
+እረ
+ውይ
+ወይኔ
+እሽ
 
 # light noun (kept by policy)
 ጊዜ
 ነገር
+ጊዜና
+የነገሩ
 
 # numeral (keep all numerals or none)
 አንድ
@@ -200,6 +244,9 @@
 ለመጀመሪያ
 አንደኛው
 አስራ
+አንደኛ
+ሶስተኛ
+ከአስር
 
 # pronoun / demonstrative
 ይህ
@@ -238,6 +285,47 @@
 እኔን
 የራሱን
 የእኛ
+እናንተ
+እርሱ
+እነሱ
+ከእነዚህ
+ይኸው
+ይህንኑ
+እሱም
+የኔ
+እርስዎ
+እዚያ
+እነርሱ
+ይህንንም
+እሳቸው
+ለዚሁ
+አንቺ
+እሷ
+በነዚህ
+እዚሁ
+እነዚህም
+እነዚያ
+ራስህን
+የዚሁ
+ያንተ
+እርሷ
+ራሳችሁን
+እንደነዚህ
+በእንደዚህ
+በነሱ
+ለነዚህ
+የናንተ
+በዚህና
+ስለዚሁ
+ይች
+ያንቺ
+በእነዚሁ
+ራስሽን
+ከእነዚሁ
+ከነዚሁ
+ይህችው
+በነዚሁ
+እነዚህኑ
 
 # quantifier / degree word
 ብቻ
@@ -280,6 +368,22 @@
 ከሁሉም
 ብዙም
 ሁሉን
+ለሌሎች
+አንዱን
+የተለያየ
+ለማንኛውም
+ከሌላ
+የሌላ
+ማናቸውም
+ሁለቱንም
+የሌላውን
+በማናቸውም
+ለእያንዳንዱ
+ማናቸውንም
+ከአንዳንድ
+እያንዳንዷ
+በሙሉም
+ለማናቸውም
 
 # question / indefinite word
 ምን
@@ -295,6 +399,11 @@
 በምን
 መቼ
 ምንድነው
+ስንት
+ማነው
+ምነው
+ወዴት
+የቱ
 
 # adverb (time, manner)
 አሁን
@@ -341,6 +450,17 @@
 በአግባቡ
 መቼም
 በመጨረሻም
+በኋላም
+ቶሎ
+በመጨረሻ
+ወዲያ
+ምንጊዜም
+ከሰሞኑ
+ከቶ
+የሰሞኑ
+ሁል
+በሰሞኑ
+ወትሮ
 
 # quotative 'say' (quote marker)
 ብሎ
@@ -373,6 +493,11 @@
 የተባለ
 በሚለው
 እየተባለ
+ብላ
+ተባለ
+ብለህ
+ማለቱ
+በመባል
 
 # 'kind, type'; used like 'such'
 አይነት
@@ -398,6 +523,8 @@
 የለበትም
 እንዳለበት
 የሚገባው
+የሚችለውን
+በሚችሉ
 
 # light verb ማድረግ 'do'
 ማድረግ
@@ -468,15 +595,60 @@
 # 'and the like' in እና መሰል
 መሰል
 
-# Pronouns and demonstratives below the reviewed candidates
-አንቺ
-እርሱ
-እሷ
-እርሷ
-እሳቸው
-እርስዎ
-እናንተ
-እነሱ
-እነርሱ
-ያ
-እነዚያ
+# spelling variant of a listed word
+ግዜ
+እንጅ
+ትላንት
+ደሞ
+መጀመርያ
+ይኸ
+መቸም
+ይኽ
+ወስጥ
+ውሰጥ
+መቸ
+አንደሆነ
+ሃላ
+አንች
+እንደት
+እነደሆነ
+እንድህ
+
+# 'alone, by itself'
+ብቻውን
+
+# 'whole, all'; also noun 'solution'
+መላ
+
+# 'forever'
+ለዘላለም
+
+# 'say!' used as 'well, come on'
+በል
+በይ
+
+# 'recent period' in በዚህ ሰሞን
+ሰሞን
+
+# 'day before' in ከትናንት በስቲያ
+በስቲያ
+
+# 'who knows' particle
+እንጃ
+
+# 'about, around' with dates
+ግድም
+
+# placeholder 'so-and-so, thingy'
+እንትና
+እንትን
+
+# interjection 'well done'
+ጎሽ
+
+# 'not more / not less than'
+የማይበልጥ
+የማያንስ
+
+# 'with' in ከ... ጋራ (variant spelling)
+ከጋራ

@@ -1,6 +1,6 @@
 # Words to exclude: nouns, names, adjectives and content verbs that rank like stopwords.
 # Evenly spread common nouns cannot be removed by distribution statistics; they are listed here.
-# Grouped by the reason recorded in the hand review of the top 988 candidates (reviews/am_review.csv).
+# Grouped by the reason recorded in the hand review of 1253 candidates (reviews/am_review.csv).
 
 # time noun (day, month, period)
 ቀን
@@ -314,6 +314,23 @@
 አጀንዳ
 ማሳያ
 ድንበር
+ዘዴ
+ፈጣሪ
+ወንዝ
+ወንድ
+አቆጣጠር
+ምእራብ
+ቋንቋዎች
+ድርጊቶች
+እንግሊዝኛ
+ነገስት
+ልደት
+ወረራ
+ነገስታት
+ቅርስ
+ግዛቶች
+ዋቢ
+ቲም
 
 # clitic form of a noun
 በኢትዮጵያ
@@ -364,6 +381,13 @@
 ስራውን
 የሀገር
 ከአለም
+በሰሜን
+የባህር
+ስሙ
+በታሪክ
+በምስራቅ
+በዋና
+በሁኔታው
 
 # 'around, area'; also postposition 'about'
 አካባቢ
@@ -422,6 +446,15 @@
 በጎ
 ተራ
 አነስተኛ
+ወታደራዊ
+ታዋቂ
+የውስጥ
+ጥንታዊ
+የዘላለም
+አማካይ
+የኋላ
+የወደፊቱ
+የታች
 
 # name or place
 ኢትዮጵያውያን
@@ -451,6 +484,7 @@
 በአፍሪካ
 መኮንን
 ምስራቅ
+ቢቢሲ
 
 # reporting verb (news style)
 ገልጸዋል
@@ -463,6 +497,29 @@
 ታውቋል
 አስታወቀ
 ተብሏል
+ተገልጿል
+ገልጿል
+አስረድተዋል
+እንደገለጹት
+አስታውቀዋል
+የገለጹት
+ተገለጸ
+ይገልጻል
+አመልክተዋል
+እንደተናገሩት
+አሳስበዋል
+ሲናገር
+አብራርተዋል
+እንደተገለጸው
+አስታውሰዋል
+አስገንዝበዋል
+ተከናውኗል
+አሳሰበ
+መግለጹን
+እንዳስረዱት
+ተከናወነ
+ተጠናቅቋል
+አስገነዘቡ
 
 # content verb
 ለማግኘት
@@ -494,6 +551,13 @@
 ማሰብ
 መጣ
 መውሰድ
+አላውቅም
+ያሳዝናል
+አታውቅም
+ይሰማቸዋል
+ይሞታል
+ነይ
+በማቀድ
 
 # 'with, holding' converb
 ይዞ
@@ -614,6 +678,9 @@
 # title
 ዳይሬክተር
 ሊቀመንበር
+አጼ
+አለቃ
+ወይዘሪት
 
 # 'former' adjective
 የቀድሞ
@@ -633,3 +700,62 @@
 
 # 'obligation' in ግድ ነው
 ግድ
+
+# morpheme or abbreviation fragment
+አም
+ኛው
+ከነ
+በየ
+አክልበ
+
+# morpheme fragment (written apart from its word)
+አል
+ዎች
+ኤል
+አን
+እንድ
+ነት
+እየ
+አስ
+እን
+በነ
+በት
+ለይ
+እንዲ
+የሚ
+ኢት
+እስክ
+እንዳ
+አት
+አዊ
+
+# noun 'scandal'; also interjection
+ጉድ
+
+# greeting adjective 'fine, well'
+ደህና
+
+# politeness formula (thanks, please, amen)
+አሜን
+አመሰግናለሁ
+እባክህ
+እናመሰግናለን
+እባክዎ
+እባክሽ
+
+# part of a compound (ዘመነ መንግስት, ስርወ መንግስት, ንጉሰ ነገስት)
+ዘመነ
+ንጉሰ
+ስርወ
+
+# 'the only one' adjective
+ብቸኛው
+
+# 'hit him' or 'say to him'
+በለው
+
+# imperative 'stop it, leave it'
+ተው
+
+# content verb 'until it arrives'
+እስኪደርስ

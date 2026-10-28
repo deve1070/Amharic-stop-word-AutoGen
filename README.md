@@ -110,7 +110,8 @@ fragments. Surface forms are otherwise kept; pass a morphology-aware tokenizer v
 The noun filter uses `data/am.exclude.txt` (words reviewed by hand as nouns, names, adjectives or content verbs),
 `data/am.include.txt` (words reviewed as stopwords, including the light nouns ጊዜ and ነገር, plus pronouns that rank
 lower), `data/am.person_titles.txt` and `data/am.place_words.txt`. Both lists are grouped by the reason recorded in
-`reviews/am_review.csv`, the review of the top 988 candidates.
+`reviews/am_review.csv`, the review of 1,253 candidates: the 988 highest-ranked ones, plus the words suggested by
+three published Amharic lists and by Amharic Wikipedia.
 
 `scripts/build_amharic_list.py` counts each corpus separately (CC-100 in blocks that end at document boundaries),
 writes the combined-corpus list and a cross-corpus consensus list (a word must score well in every corpus) passed
