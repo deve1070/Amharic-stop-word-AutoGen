@@ -1,3 +1,5 @@
+import pytest
+
 import autostopgen as a
 
 
@@ -35,6 +37,14 @@ def test_amharic_normalizer_expands_slash_abbreviations():
     assert tok(n("በጠ/ሚ መለስ")) == ["በጠቅላይ", "ሚኒስትር", "መለስ"]
     assert n("ፅ/ቤት") == "ጽህፈት ቤት"
     assert n("ሀ/ለ") == "ሀ/ለ"
+
+
+def test_kendall_tau_and_list_agreement():
+    assert a.kendall_tau(list("abcd"), list("abcd")) == 1.0
+    assert a.kendall_tau(list("abcd"), list("dcba")) == -1.0
+    assert a.kendall_tau(list("abcx"), list("acby")) == pytest.approx(1 / 3)
+    res = a.list_agreement(list("abcdef"), list("abcxyz"), ks=(3, 6))
+    assert res["overlap@3"] == 3 and res["overlap@6"] == 3 and res["tau@3"] == 1.0
 
 
 def _title_corpus():
