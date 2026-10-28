@@ -151,6 +151,8 @@ class StopwordGenerator:
         ``ridf``, ``deficit`` and ``dispersion`` are ranked within bands of this many candidates
         of similar frequency (default: max(100, candidates / 200)); ``tf``, ``idf`` and
         ``entropy`` are ranked over all candidates.
+    observers
+        Callables that receive each block's token list as it is counted.
     """
 
     def __init__(
@@ -168,6 +170,7 @@ class StopwordGenerator:
         length_normalize: bool = True,
         band_size: Optional[int] = None,
         language: Optional[str] = None,
+        observers: Sequence[Callable[[List[str]], None]] = (),
     ):
         self.tokenizer = tokenizer or default_tokenizer
         self.normalizer = normalizer or default_normalizer
@@ -180,6 +183,7 @@ class StopwordGenerator:
         self.min_df = min_df
         self.language = language
         self.band_size = band_size
+        self.observers = list(observers)
         self._length_normalize = bool(length_normalize)
         self._validate()
         self._reset()
@@ -238,10 +242,12 @@ class StopwordGenerator:
         self._Q.append(0.0)
         return i
 
-    def _add_block(self, tokens: Sequence[str]) -> None:
+    def _add_block(self, tokens: List[str]) -> None:
         length = len(tokens)
         if length == 0:
             return
+        for observe in self.observers:
+            observe(tokens)
         idx = self._idx
         count, df, R, S, Q = self._count, self._df, self._R, self._S, self._Q
         ln = self._length_normalize
