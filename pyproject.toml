@@ -15,7 +15,6 @@ keywords = ["stopwords", "nlp", "information retrieval", "amharic", "text prepro
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "Natural Language :: Amharic",
     "Programming Language :: Python :: 3",
     "Topic :: Text Processing :: Linguistic",
 ]
