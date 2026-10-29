@@ -1,5 +1,7 @@
 # autostopgen
 
+[![PyPI](https://img.shields.io/pypi/v/autostopgen)](https://pypi.org/project/autostopgen/)
+
 Generate stopword lists **from your own corpus**, for any language, and ship a ready-made Amharic list.
 
 Method adapted from Miretie & Khedkar, *Automatic Generation of Stopwords in the Amharic Text*
